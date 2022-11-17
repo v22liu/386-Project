@@ -1,5 +1,7 @@
 import serial
 
+from plotting import plot_heatmap
+
 # Set COM to the Arduino COM and set baud rate to same val in arduino (ie. Serial.begin(9600);)
 arduino_port = 'COM7'  
 baud = 9600
@@ -18,7 +20,6 @@ while line < samples:
         positions[line] = split_data
         line += 1
 
-print(positions)
 ser.close()
 
-positions = np.array(positions)
+plot_heatmap(positions)
