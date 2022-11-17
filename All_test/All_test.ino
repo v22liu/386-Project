@@ -18,6 +18,15 @@ void setup() {
   servoy.attach(7);
 }
 
+void printPos(){
+//  Serial.print("(x,y,z) -> ");
+  Serial.print(posx);
+  Serial.print(", ");
+  Serial.print(posy);
+  Serial.print(", ");
+  Serial.println(distance);
+}
+
 void ultrasound() {
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
@@ -27,17 +36,8 @@ void ultrasound() {
 
   duration = pulseIn(echoPin, HIGH);
   distance = (duration*.0343)/2;
-  Serial.print("Distance: ");
-  Serial.println(distance);
+  printPos();
   delay(100);
-}
-
-void printPos(){
-  Serial.print("(posx, posy) = (");
-  Serial.print(posx);
-  Serial.print(", ");
-  Serial.print(posy);
-  Serial.println(")");
 }
 
 void loop() {
@@ -45,27 +45,28 @@ void loop() {
   servoy.writeMicroseconds(1100);
   delay(5000);
   
-  for (posy=1100; posy<1900; posy+=200) {
+  for (posy=1100; posy<=1900; posy+=200) {
     servoy.writeMicroseconds(posy);
     
     if (posx==1100) {
-      for (posx=1100; posx<1900; posx+=200) {
+      for (posx=1100; posx<=1900; posx+=200) {
         servox.writeMicroseconds(posx);
         delay(3000);
-        printPos();
         ultrasound();
       }
+      posx-=200;
 
     } else if (posx == 1900){
-      for (posx=1900; posx>1100; posx-=200) {
+      for (posx=1900; posx>=1100; posx-=200) {
         servox.writeMicroseconds(posx);
-        delay(3000);       
-        printPos();
+        delay(3000);      
         ultrasound();
       }
+      posx+=200;
     }
   }
 
   servoy.detach();
   servox.detach();
+  posx=0;
 }
