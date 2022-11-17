@@ -2,64 +2,70 @@
 Servo servox;
 Servo servoy;
 
-//const int trigPin = 2;
-//const int echoPin = 3;
+const int trigPin = 2;
+const int echoPin = 3;
 
 float duration, distance;
-int posx=0;
-int posy=0;
+int posx=1100;
+int posy=1100;
 
 void setup() {
-//  pinMode(trigPin, OUTPUT);
-//  pinMode(echoPin, INPUT);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
   Serial.begin(9600);
 
-  servox.attach(5);
-  servoy.attach(3);
-  
-  for (posx = 180; posx >=0; posx--) {
-      servoy.write(posx);
-      servox.write(posx);              // tell servo to go to position in variable 'pos'
-//      ultrasound();
-      delay(30);
-    }
+  servox.attach(10);
+  servoy.attach(7);
 }
 
-//void ultrasound() {
-//  digitalWrite(trigPin, LOW);
-//  delayMicroseconds(2);
-//  digitalWrite(trigPin, HIGH);
-//  delayMicroseconds(10);
-//  digitalWrite(trigPin, LOW);
-//
-//  duration = pulseIn(echoPin, HIGH);
-//  distance = (duration*.0343)/2;
-//  Serial.print("Distance: ");
-//  Serial.println(distance);
-//  delay(100);
-//}
+void ultrasound() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration*.0343)/2;
+  Serial.print("Distance: ");
+  Serial.println(distance);
+  delay(100);
+}
+
+void printPos(){
+  Serial.print("(posx, posy) = (");
+  Serial.print(posx);
+  Serial.print(", ");
+  Serial.print(posy);
+  Serial.println(")");
+}
 
 void loop() {
-  for(posy=0; posy<=180; posy+=30){
-    for (posx = 0; posx <= 180; posx += 1) { // goes from 0 degrees to 180 degrees
-      // in steps of 1 degree
-      servox.write(posx);              // tell servo to go to position in variable 'pos'
-//      ultrasound();
-      delay(30);                       // waits 15ms for the servo to reach the position
+  servox.writeMicroseconds(1100);
+  servoy.writeMicroseconds(1100);
+  delay(5000);
+  
+  for (posy=1100; posy<1900; posy+=200) {
+    servoy.writeMicroseconds(posy);
+    
+    if (posx==1100) {
+      for (posx=1100; posx<1900; posx+=200) {
+        servox.writeMicroseconds(posx);
+        delay(3000);
+        printPos();
+        ultrasound();
+      }
+
+    } else if (posx == 1900){
+      for (posx=1900; posx>1100; posx-=200) {
+        servox.writeMicroseconds(posx);
+        delay(3000);       
+        printPos();
+        ultrasound();
+      }
     }
-    servoy.write(posy);
-    posy+=30;
-    for (posx = 180; posx >=0; posx--) {
-      servox.write(posx);              // tell servo to go to position in variable 'pos'
-//      ultrasound();
-      delay(30);
-    }
-    servoy.write(posy);
-    delay(30);
   }
-  for (posy = 180; posy >=0; posy--) {
-      servoy.write(posy);              // tell servo to go to position in variable 'pos'
-//      ultrasound();
-      delay(30);
-    }
+
+  servoy.detach();
+  servox.detach();
 }
