@@ -11,9 +11,7 @@ ser = serial.Serial(arduino_port, baud, timeout=.1)
 ser.close()
 ser.open()  # this will also reboot the arduino
 
-
-
-def read(ser):
+def read_serial(ser):
     data = str(ser.readline())[2:][:-5] # the last bit gets rid of the new-line chars
     split = ""
     if data:
