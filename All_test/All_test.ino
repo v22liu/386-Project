@@ -51,7 +51,12 @@ void loop() {
     if (posx==1100) {
       for (posx=1100; posx<=1900; posx+=200) {
         servox.writeMicroseconds(posx);
-        delay(3000);
+        
+        delay(5000);
+        ultrasound();
+        ultrasound();
+        ultrasound();
+        ultrasound();
         ultrasound();
       }
       posx-=200;
@@ -59,7 +64,11 @@ void loop() {
     } else if (posx == 1900){
       for (posx=1900; posx>=1100; posx-=200) {
         servox.writeMicroseconds(posx);
-        delay(3000);      
+        delay(5000);
+        ultrasound();
+        ultrasound();
+        ultrasound();
+        ultrasound();
         ultrasound();
       }
       posx+=200;

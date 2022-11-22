@@ -1,6 +1,6 @@
 
-const int trigPin = 3;
-const int echoPin = 5;
+const int trigPin = 2;
+const int echoPin = 3;
 
 float duration, distance;
 

@@ -9,14 +9,15 @@ ser = serial.Serial(arduino_port, baud, timeout=.1)
 ser.close()
 ser.open()  # this will also reboot the arduino
 
-positions = [""] * 25
-samples = 25
+positions = [""] * 5 * 25
+samples = 5 * 25
 line = 0
 while line < samples:
     data = str(ser.readline())[2:][:-5] # the last bit gets rid of the new-line chars
     split_data = ""
     if data:
         split_data = [float(val) for val in data.split(', ')]
+        print(split_data)
         positions[line] = split_data
         line += 1
 
