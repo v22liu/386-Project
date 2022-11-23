@@ -1,28 +1,28 @@
 #include <Servo.h>
-Servo servox;
-Servo servoy;
+Servo servo_y;
+Servo servo_x;
 
 const int trigPin = 2;
 const int echoPin = 3;
 
 float duration, distance;
-int posx=1100;
-int posy=1100;
+int pos_y=1100;
+int pos_x=1100;
 
 void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   Serial.begin(9600);
 
-  servox.attach(10);
-  servoy.attach(7);
+  servo_y.attach(10);
+  servo_x.attach(7);
 }
 
 void printPos(){
 //  Serial.print("(x,y,z) -> ");
-  Serial.print(posx);
+  Serial.print(pos_x);
   Serial.print(", ");
-  Serial.print(posy);
+  Serial.print(pos_y);
   Serial.print(", ");
   Serial.println(distance);
 }
@@ -41,16 +41,16 @@ void ultrasound() {
 }
 
 void loop() {
-  servox.writeMicroseconds(1100);
-  servoy.writeMicroseconds(1100);
-  delay(2000);
+  servo_y.writeMicroseconds(1100);
+  servo_x.writeMicroseconds(1100);
+  delay(5000);
   
-  for (posy=1100; posy<=1900; posy+=100) {
-    servoy.writeMicroseconds(posy);
+  for (pos_x=1100; pos_x<=1900; pos_x+=100) {
+    servo_x.writeMicroseconds(pos_x);
     
-    if (posx==1100) {
-      for (posx=1100; posx<=1900; posx+=100) {
-        servox.writeMicroseconds(posx);
+    if (pos_y==1100) {
+      for (pos_y=1100; pos_y<=1900; pos_y+=100) {
+        servo_y.writeMicroseconds(pos_y);
         
         delay(500);
         ultrasound();
@@ -59,11 +59,11 @@ void loop() {
         ultrasound();
         ultrasound();
       }
-      posx-=100;
+      pos_y-=100;
 
-    } else if (posx == 1900){
-      for (posx=1900; posx>=1100; posx-=100) {
-        servox.writeMicroseconds(posx);
+    } else if (pos_y == 1900){
+      for (pos_y=1900; pos_y>=1100; pos_y-=100) {
+        servo_y.writeMicroseconds(pos_y);
         delay(500);
         ultrasound();
         ultrasound();
@@ -71,11 +71,11 @@ void loop() {
         ultrasound();
         ultrasound();
       }
-      posx+=100;
+      pos_y+=100;
     }
   }
 
-  servoy.detach();
-  servox.detach();
-  posx=0;
+  servo_x.detach();
+  servo_y.detach();
+  pos_y=0;
 }
