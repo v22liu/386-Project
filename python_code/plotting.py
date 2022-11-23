@@ -12,7 +12,7 @@ def plot_heatmap(coordinates):
     df.rolling(5).mean()
     df = df.iloc[::5, :]
     pivotted= df.pivot('Y_value','X_value','Z_value')
-    sns.heatmap(pivotted,cmap='Blues_r')
+    sns.heatmap(pivotted,vmax=120,vmin=0,cmap='Blues_r')
     plt.show()
     print(df)
 

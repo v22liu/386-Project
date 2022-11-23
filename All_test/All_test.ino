@@ -43,35 +43,35 @@ void ultrasound() {
 void loop() {
   servox.writeMicroseconds(1100);
   servoy.writeMicroseconds(1100);
-  delay(5000);
+  delay(2000);
   
-  for (posy=1100; posy<=1900; posy+=200) {
+  for (posy=1100; posy<=1900; posy+=100) {
     servoy.writeMicroseconds(posy);
     
     if (posx==1100) {
-      for (posx=1100; posx<=1900; posx+=200) {
+      for (posx=1100; posx<=1900; posx+=100) {
         servox.writeMicroseconds(posx);
         
-        delay(5000);
+        delay(500);
         ultrasound();
         ultrasound();
         ultrasound();
         ultrasound();
         ultrasound();
       }
-      posx-=200;
+      posx-=100;
 
     } else if (posx == 1900){
-      for (posx=1900; posx>=1100; posx-=200) {
+      for (posx=1900; posx>=1100; posx-=100) {
         servox.writeMicroseconds(posx);
-        delay(5000);
+        delay(500);
         ultrasound();
         ultrasound();
         ultrasound();
         ultrasound();
         ultrasound();
       }
-      posx+=200;
+      posx+=100;
     }
   }
 
