@@ -6,7 +6,7 @@ int val;
 
 void setup() {
   // put your setup code here, to run once:
-  myservo.attach(5);
+  myservo.attach(3);
 }
 
 void loop() {
