@@ -3,14 +3,14 @@ import serial
 from plotting import plot_heatmap
 
 # Set COM to the Arduino COM and set baud rate to same val in arduino (ie. Serial.begin(9600);)
-arduino_port = 'COM7'  
+arduino_port = 'COM4'  
 baud = 9600
 ser = serial.Serial(arduino_port, baud, timeout=.1)
 ser.close()
 ser.open()  # this will also reboot the arduino
 
-positions = [""] * 5 * 25
-samples = 5 * 25
+positions = [""] * 5 * 81
+samples = 5 * 81
 line = 0
 while line < samples:
     data = str(ser.readline())[2:][:-5] # the last bit gets rid of the new-line chars
